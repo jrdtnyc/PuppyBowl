@@ -2,9 +2,28 @@
 
 //If you would like to, you can create a variable to store the API_URL here.
 //This is optional. if you do not want to, skip this and move on.
-
+//My API Endpoint: https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players
 /////////////////////////////
 /*This looks like a good place to declare any state or global variables you might need*/
+const playerEndpoint =
+  "https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players";
+let players = [];
+let a_player = null;
+const appBody = document.querySelector("#app");
+const playerList = document.createElement("div");
+playerList.id = "dataList";
+appBody.append(playerList);
+const individualPlayer = document.createElement("div");
+individualPlayer.id = "individual";
+appBody.append(individualPlayer);
+const titleHeader = document.createElement("div");
+titleHeader.id = "title";
+titleHeader.innerHTML = `<h1>Puppy Bowl 2026</h1>`;
+document.body.prepend(titleHeader);
+const columnNamesContainer = document.createElement("div");
+columnNamesContainer.id = "columnNames";
+titleHeader.insertAdjacentElement("afterend", columnNamesContainer);
+columnNamesContainer.innerHTML = `<div id=theList><h2>Roster</h2></div><div id=theData><h2>Player Details</h2></div>`;
 
 ////////////////////////////
 
@@ -14,7 +33,15 @@
  * Instead, this function should be keeping our state up to date
  */
 const fetchAllPlayers = async () => {
-  //TODO
+  try {
+    const response = await fetch(
+      "https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players",
+    );
+    const { data } = await response.json();
+    players = data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**
@@ -28,7 +55,15 @@ const fetchAllPlayers = async () => {
  * Unless we know the id of the player we are trying to fetch, we cannot call fetchSinglePlayer()
  */
 const fetchSinglePlayer = async (playerId) => {
-  //TODO
+  try {
+    const response = await fetch(
+      `https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players/${id}`,
+    );
+    const { data } = await response.json();
+    a_party = data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**
@@ -46,9 +81,7 @@ const fetchSinglePlayer = async (playerId) => {
  * create a new player object and then pass it to addNewPlayer()?
  */
 
-const addNewPlayer = async (newPlayer) => {
-  //TODO
-};
+const addNewPlayer = async (newPlayer) => {};
 
 /**
  * Removes a player from the roster via the API.
@@ -61,9 +94,7 @@ const addNewPlayer = async (newPlayer) => {
  * Unless we know the id of the player we are trying to remove, we cannot call removePlayer()
  */
 
-const removePlayer = async (playerId) => {
-  //TODO
-};
+const removePlayer = async (playerId) => {};
 
 /**
  * Updates html to display a list of all players or a single player page.
@@ -82,7 +113,32 @@ const removePlayer = async (playerId) => {
  *
  */
 const render = () => {
-  // TODO
+  const html = players.map((player) => {
+    return `<p class="playerName" data-playerid=${player.imageURL}>${player.name}</p>`;
+  });
+  playerList.innerHTML = html.join("");
+  if (!a_player) {
+    individualPlayer.innerHTML = "Please Select A Player!";
+  } else {
+    individualPlayer.innerHTML = `
+        <div id=individual>
+            
+            <h3>'${a_player.name}</h3>
+            <p>
+                ${a_player.id}
+            </p>    
+            <p>
+                ${a_player.breed}
+            </p>
+            <p>
+                ${a_player.team}
+            </p>
+            <p>
+                ${a_player.status}
+            </p>
+        </div>
+      `;
+  }
 };
 
 /**
@@ -91,7 +147,7 @@ const render = () => {
  */
 const init = async () => {
   //Before we render, what do we always need?
-
+  fetchAllPlayers();
   render();
 };
 
