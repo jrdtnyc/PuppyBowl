@@ -1,0 +1,60 @@
+#app {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  gap: 5%;
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+}
+
+#columnNames {
+  display: flex;
+  text-decoration: underline;
+}
+
+#theList {
+  flex: 1;
+}
+
+#theData {
+  flex: 1;
+  justify-content: left;
+}
+
+#dataList {
+  display: flex;
+  flex: 0 0 45%;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+
+#individual {
+  flex: 0 0 45%;
+}
+
+.listView {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 25px;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: darkgrey;
+  padding: 5px;
+  border-radius: 10px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.playerImage {
+  width: 50px;
+  height: 100px;
+  border-radius: 15px;
+}
+
+.playerName {
+  flex: 1;
+}

@@ -118,8 +118,10 @@ const removePlayer = async (playerId) => {};
  */
 const render = () => {
   const html = all_players.map((player) => {
-    return `<img src=${player.imageUrl};
-    <p class="playerName" data-playerid=${player.id}>${player.name}</p>`;
+    return `<div class= listView>
+    <img class = playerImage src=${player.imageUrl}>
+    <p class = playerName data-playerid=${player.id}>${player.name}</p>
+    </div>`;
   });
   playerList.innerHTML = html.join("");
   if (!a_player) {
