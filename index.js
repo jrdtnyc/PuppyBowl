@@ -7,7 +7,7 @@
 /*This looks like a good place to declare any state or global variables you might need*/
 const playerEndpoint =
   "https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players";
-let players = [];
+let all_players = [];
 let a_player = null;
 const appBody = document.querySelector("#app");
 const playerList = document.createElement("div");
@@ -38,7 +38,11 @@ const fetchAllPlayers = async () => {
       "https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players",
     );
     const { data } = await response.json();
-    players = data;
+    const layer1 = data;
+    const { players } = layer1;
+    all_players = players;
+    console.log(Array.isArray(x));
+    console.log(x);
   } catch (error) {
     console.log(error);
   }
@@ -60,7 +64,7 @@ const fetchSinglePlayer = async (playerId) => {
       `https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players/${id}`,
     );
     const { data } = await response.json();
-    a_party = data;
+    a_player = data;
   } catch (error) {
     console.log(error);
   }
@@ -113,8 +117,9 @@ const removePlayer = async (playerId) => {};
  *
  */
 const render = () => {
-  const html = players.map((player) => {
-    return `<p class="playerName" data-playerid=${player.imageURL}>${player.name}</p>`;
+  const html = all_players.map((player) => {
+    return `<img src=${player.imageUrl};
+    <p class="playerName" data-playerid=${player.id}>${player.name}</p>`;
   });
   playerList.innerHTML = html.join("");
   if (!a_player) {
@@ -147,7 +152,7 @@ const render = () => {
  */
 const init = async () => {
   //Before we render, what do we always need?
-  fetchAllPlayers();
+  await fetchAllPlayers();
   render();
 };
 
