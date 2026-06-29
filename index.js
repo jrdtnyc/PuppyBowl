@@ -30,16 +30,22 @@ playerForm.innerHTML = `
 <h2 id=formHeader>Invite A Puppy</h2>
 <form id=newPlayerForm>
   <label for="name">Name:</label><br>
-  <input type="text" id="name" name="name"><br>
+  <input type="text" id="name" name="name" required><br>
   <label for="breed">Breed:</label><br>
-  <input type="text" id="breed" name="breed"><br>
+  <input type="text" id="breed" name="breed" required><br>
   <label for="status">Status:</label>
-  <select id="status" name="status">
+  <select id="status" name="status" required>
     <option value="bench">bench</option>
     <option value="field">field</option>
   </select>
     <label for="imageUrl">Image URL:</label><br>
-  <input type="text" id="imageUrl" name="imageUrl"><br>
+  <input type="text" id="imageUrl" name="imageUrl" required><br>
+  <label for="teamId">Team:</label>
+  <select id="teamId" name="teamId" required>
+    <option value="14030">Fluff</option>
+    <option value="14029">Ruff</option>
+  </select>
+  <button type="submit">Submit</button>
 </form>
 `;
 appBody.append(playerForm);
@@ -112,7 +118,40 @@ const fetchSinglePlayer = async (playerId) => {
  * create a new player object and then pass it to addNewPlayer()?
  */
 
-const addNewPlayer = async (newPlayer) => {};
+const addNewPlayer = async (newPlayer) => {
+  try {
+    const response = await fetch(
+      "https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPlayer),
+      },
+    );
+    const { data } = await response.json();
+    console.log(data);
+    players.push(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+newPlayerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formData = new FormData(newPlayerForm);
+  const newPlayer = {
+    name: formData.get("name"),
+    breed: formData.get("breed"),
+    status: formData.get("status"),
+    imageUrl: formData.get("imageUrl"),
+    teamId: formData.get("teamId"),
+  };
+  await addNewPlayer(newPlayer);
+  await fetchAllPlayers();
+  render();
+});
 
 /**
  * Removes a player from the roster via the API.
@@ -125,7 +164,33 @@ const addNewPlayer = async (newPlayer) => {};
  * Unless we know the id of the player we are trying to remove, we cannot call removePlayer()
  */
 
-const removePlayer = async (playerId) => {};
+const removePlayer = async (playerId) => {
+  console.log("PlayerId");
+  console.log(playerId);
+  try {
+    await fetch(
+      `https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players/${playerId}`,
+      {
+        method: "DELETE",
+      },
+    );
+    all_players = all_players.filter((player) => {
+      return player.id !== playerId * 1;
+    });
+    a_player = null;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+individualPlayer.addEventListener("click", async (event) => {
+  console.log(event.target.id);
+  if (event.target.id === "deleteButton") {
+    console.log("Does This Work???");
+    await removePlayer(event.target.dataset.playerid);
+    render();
+  }
+});
 
 /**
  * Updates html to display a list of all players or a single player page.
@@ -172,6 +237,9 @@ const render = () => {
             <p>
                 <strong>Status:</strong> ${a_player.status}
             </p>
+            <br>
+            <br>
+              <button id="deleteButton" data-playerId=${a_player.id}>Remove From Roster</button>
         </div>
       `;
   }
