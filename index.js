@@ -41,18 +41,12 @@ const fetchAllPlayers = async () => {
     const layer1 = data;
     const { players } = layer1;
     all_players = players;
+    console.log(Array.isArray(x));
+    console.log(x);
   } catch (error) {
     console.log(error);
   }
 };
-
-dataList.addEventListener("click", async (event) => {
-  if (event.target.classList.contains("playerName")) {
-    console.log("YES!!!");
-    await fetchSinglePlayer(event.target.dataset.playerid);
-    render();
-  }
-});
 
 /**
  * Fetches a single player from the API.
@@ -67,12 +61,10 @@ dataList.addEventListener("click", async (event) => {
 const fetchSinglePlayer = async (playerId) => {
   try {
     const response = await fetch(
-      `https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players/${playerId}`,
+      `https://fsa-puppy-bowl.herokuapp.com/api/2605-JEARON/players/${id}`,
     );
     const { data } = await response.json();
-    const { player } = data;
-    a_player = player;
-    console.log(a_player);
+    a_player = data;
   } catch (error) {
     console.log(error);
   }
@@ -137,21 +129,19 @@ const render = () => {
   } else {
     individualPlayer.innerHTML = `
         <div id=individual>
-            <div class = playerCardImageContainer>
-            <img class = playerCardImage src = ${a_player.imageUrl}>
-            </div>
-            <h3>Name: ${a_player.name}</h3>
+            
+            <h3>'${a_player.name}</h3>
             <p>
-               <strong>ID:</strong> ${a_player.id}
+                ${a_player.id}
             </p>    
             <p>
-                <strong>Breed:</strong> ${a_player.breed}
+                ${a_player.breed}
             </p>
             <p>
-                <strong>Team:</strong> ${a_player.team.name}
+                ${a_player.team}
             </p>
             <p>
-                <strong>Status:</strong> ${a_player.status}
+                ${a_player.status}
             </p>
         </div>
       `;
