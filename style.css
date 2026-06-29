@@ -55,6 +55,18 @@
   border-radius: 15px;
 }
 
+.playerCardImageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playerCardImage {
+  width: 200px;
+  height: 400px;
+  border-radius: 15px;
+}
+
 .playerName {
   flex: 1;
 }
