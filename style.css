@@ -70,3 +70,32 @@
 .playerName {
   flex: 1;
 }
+
+#playerCreationForm {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 45%;
+}
+
+#newPlayerForm {
+}
+
+#name {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#breed {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#status {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#imageUrl {
+  width: 100%;
+  margin-bottom: 10px;
+}

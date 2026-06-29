@@ -24,6 +24,25 @@ const columnNamesContainer = document.createElement("div");
 columnNamesContainer.id = "columnNames";
 titleHeader.insertAdjacentElement("afterend", columnNamesContainer);
 columnNamesContainer.innerHTML = `<div id=theList><h2>Roster</h2></div><div id=theData><h2>Player Details</h2></div>`;
+const playerForm = document.createElement("div");
+playerForm.id = "playerCreationForm";
+playerForm.innerHTML = `
+<h2 id=formHeader>Invite A Puppy</h2>
+<form id=newPlayerForm>
+  <label for="name">Name:</label><br>
+  <input type="text" id="name" name="name"><br>
+  <label for="breed">Breed:</label><br>
+  <input type="text" id="breed" name="breed"><br>
+  <label for="status">Status:</label>
+  <select id="status" name="status">
+    <option value="bench">bench</option>
+    <option value="field">field</option>
+  </select>
+    <label for="imageUrl">Image URL:</label><br>
+  <input type="text" id="imageUrl" name="imageUrl"><br>
+</form>
+`;
+appBody.append(playerForm);
 
 ////////////////////////////
 
